@@ -1,6 +1,6 @@
 # Week 0 — Billing and Architecture :
 
-### Conceptual Diagram
+### Conceptual Diagram :
 ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/25bdf2b82cda361811cd0bde9c19833b3ae9271f/_docs/assets/Cruddur%20Conceptual%20diagram.png)
 
 Here's a link to [share on Lucid Chart](https://lucid.app/lucidchart/invitations/accept/inv_71f2907e-caea-4129-9ada-b973e446b735)
@@ -10,7 +10,7 @@ Here's a link to [share on Lucid Chart](https://lucid.app/lucidchart/invitations
 ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/25bdf2b82cda361811cd0bde9c19833b3ae9271f/_docs/assets/Cruddur%20logical%20diagram.png)
 
 ### Creation of IAM admin usage with access key :
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/user%20mfa%20&%20cloudshell%20link.png)
 
 ### Installing AWS CLI using our GitPod account :
 From within my GitPod terminal, I did the following:
@@ -18,13 +18,15 @@ From within my GitPod terminal, I did the following:
 2. `unzip awscliv2.zip` -> just unpacks our archived file
 3. `sudo ./aws/install`
 
-
 #### Configure User Credentials to use CloudShell :
-To configure User Credentials via the CLI, i Change the values and export at the terminal as seen in this image:
-![image]()
-
-Verify using `aws sts get-caller-identity`; Now, we coud see my user credentials.
-![image]()
+To configure User Credentials via the CLI, i Change the values and export at the terminal link this : 
+```
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
+export AWS_DEFAULT_REGION=us-east-1
+```
+Then, to verify if it's work, we can do `aws sts get-caller-identity` :
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/AWS%20identity.png)
 
 #### GitPod Configuration :
 To avoid having to reconfigure our environment variables every time Gitpod was launched, we made sure to save them in the software configuration. To do this, we use the script from from [Andrew Brown's repo](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/week-0/journal/week0.md) which aws-cli is installed and set the cli prompt to auto-complete :
@@ -40,7 +42,9 @@ tasks:
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
 ```
-*__Persisting earlier exported values to GitPod's workspace, use:__* `gp env <AWS_ENV_VARIABLE>=<AWS_VALUE>`
+Then, to persist update on cloud environment : `gp env <AWS_ENV_VARIABLE>=<AWS_VALUE>`
+
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/aws%20grep%20info.png)
   
 #### Create Budget with notifications : 
 To create Budget via AWS CLI, we based ourselves on the [CLI Documentation](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/budgets/create-budget.html) 
@@ -52,7 +56,7 @@ We persist the Account ID variable using: `gp env AWS_ACCOUNT_ID=$(aws sts get-c
     --budget file://aws/json/budget.json \
     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
 ```
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/aws%20budget%20created.png)
 
 
 #### Create SNS Topic :
@@ -63,10 +67,12 @@ aws sns subscribe \
     --protocol=email \
     --notification-endpoint=everlygrandest+bootcamp@gmail.com
 ```
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/aws%20billing%20alarm.png)
 
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/aws%20billing%20alarm%20setup.png)
 
 #### Creating a Billing Alarm :
-Using this [json file](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/week-0/aws/json/alarm_config.json.example), we will be updating the `arn` on line 6 to our previously created Topic `arn`. Then, run the `aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json` command to set up the alarm
+Using this [json file](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/week-0/aws/json/alarm_config.json.example), we will be updating the `arn` section. Then, do the `aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json` command to set up the alarm
 
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/aws%20billing%20alarm%20setup.png)
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/aws%20billing%20alarm.png)

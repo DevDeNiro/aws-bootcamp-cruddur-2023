@@ -26,7 +26,7 @@ export AWS_SECRET_ACCESS_KEY=""
 export AWS_DEFAULT_REGION=us-east-1
 ```
 Then, to verify if it's work, we can do `aws sts get-caller-identity` :
-![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/AWS%20identity.png)
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/3d182c61ca6e3942bee8338288a0519d7e81f54b/_docs/assets/week0/AWS%20identity.png)
 
 ### GitPod Configuration :
 To avoid having to reconfigure our environment variables every time Gitpod was launched, we made sure to save them in the software configuration. To do this, we use the script from [Andrew Brown's repo](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/week-0/journal/week0.md) which aws-cli is installed and set the cli prompt to auto-complete :

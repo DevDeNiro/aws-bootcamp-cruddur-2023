@@ -44,7 +44,7 @@ tasks:
 ```
 Then, to persist update on cloud environment : `gp env <AWS_ENV_VARIABLE>=<AWS_VALUE>`
 
-![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/aws%20grep%20info.png)
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/9707ef582a145b5780805c5a30563bdc223934aa/_docs/assets/week0/aws%20grep%20info.png)
   
 ### Create Budget with notifications : 
 To create Budget via AWS CLI, we based ourselves on the [CLI Documentation](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/budgets/create-budget.html) 

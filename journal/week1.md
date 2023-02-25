@@ -1,1 +1,69 @@
 # Week 1 — App Containerization
+## Containerization of the backend
+To start docker with environment variables, we use
+
+
+FRONTEND_URL="*" BACKEND_URL="*" 
+
+build docke image for the backend with:
+
+
+To run docker with environment variables, use the following:
+
+docker run -p 4567:4567 -e FRONTEND_URL='*' -e BACKEND_URL='*'  backend-flask
+
+
+## Containerization of the frontend
+Created a docker file for the frontend React js application and ran the following docker command to build the docker image for the frontend
+~~~
+docker build -t frontend-react-js ./rontend-react-js
+~~~
+
+Run the frontend app with :
+~~~
+docker run -p 3000:3000 -d frontend-react-js
+~~~
+
+
+Ran npm command to install all needed dependences need to run node as well npm audit for fix potential vulnerabilities.
+~~~
+npm install 
+npm audit fix --force
+~~~
+
+with all the images created, the output of docker images will like what's been build 
+
+![docker images](./assets/docker.jpg)
+
+## Running multiple containers with magical dockerfile
+
+Create the docker-compose.yml file in the root directory and update it using the .yml from Andrew Brown :
+Run the docker-compose.yml file using docker compose up -d. This builds both the frontend & backend in one go.
+
+image()
+
+When, we can verify if the containers properly running with :
+``` docker ps ```
+
+## Creating the notification feature :
+
+### Document the Notification Endpoint for the OpenAI Document :
+
+### Flask backend endpoint for the OpenAI Document :
+
+###  React Page for Notifications :
+
+## Setup of new volumes : 
+### Postgres :
+
+### DynamoDB :
+
+### Run the dockerfile CMD as an external script : 
+
+### Implement a healthcheck in the V3 Docker compose file : 
+
+### implement some of best practice in my Dockerfile :
+
+### install Docker on your localmachine :
+
+### Launch an EC2 instance that has docker installed, and pull a container : 

@@ -72,6 +72,8 @@ aws sns subscribe \
 ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/c666b913d209722f208aaa44352a11cb95477895/_docs/assets/week0/aws%20billing%20alarm.png)
 
 ### Creating a Billing Alarm :
-Using this [json file](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/week-0/aws/json/alarm_config.json.example), we will be updating the `arn` section. Then, do the `aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json` command to set up the alarm
+Using this [json file](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/week-0/aws/json/alarm_config.json.example), we will be updating the `arn` section. Then, do the `aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json` command to set up the alarm : 
+
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/6ebf645d5bd55db9e7473377f0bf6b3e84fa2f5e/_docs/assets/week0/aws%20budget%20alarm.png)
 
 ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/aws%20billing%20alarm%20setup.png)

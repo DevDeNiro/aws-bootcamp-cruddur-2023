@@ -31,10 +31,15 @@ gp env BACKEND_URL
 To build the image, i did this command : ```docker build -t backend-flask ./backend-flask```                              
 Then, i use ```docker run -p 4567:4567 -e FRONTEND_URL='*' -e BACKEND_URL='*'  backend-flask``` to run the app with env variables  
 
+To see if the container work properly, go to the ```PORTS``` tabs and look at the status of the container : 
+![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/db975d74d1ddfd7efd944b5bc80b93bf09f47556/_docs/assets/week1/open%20ports%20properly.png)
+
+Now, we can launch the url on this route ```api/activities/home``` :
+![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/db975d74d1ddfd7efd944b5bc80b93bf09f47556/_docs/assets/week1/backend%20json%20of%20app.png)
 
 ## Containerization of the frontend
 In the frontend-react-js directory :
-- npm install to install node modules.
+- run ```npm i``` to install node modules.
 - create Dockerfile to build the docker image for the frontend :
 
 ```
@@ -52,7 +57,8 @@ CMD ["npm", "start"]
 We could use this command to do so : ```docker build -t frontend-react-js ./rontend-react-js```
 Now, we can run the app with : ``` docker run -d -p 3000:3000 frontend-react-js```
 
-If needed, ran ```npm i```  command still inside this directory to install all needed dependences need to run node 
+If we launch the port related to the front end app, we could see it ! 
+![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/db975d74d1ddfd7efd944b5bc80b93bf09f47556/_docs/assets/week1/frontend%20interface%20of%20the%20application.png)
 
 We can verify that all the images are created using : ``` docker images``` 
 
@@ -89,14 +95,13 @@ networks:
     driver: bridge
     name: cruddur
 ```
-Run the docker-compose.yml to builds both of the frontend & backend in one time with : ``` docker compose -f "docker-composer.yml" up -d --build  ```, or on doing right click on the docker-compose.yml fle and click on Compose up
+Run the docker-compose.yml to builds both of the frontend & backend in one time with : ``` docker compose -f "docker-composer.yml" up -d --build  ```, or on doing right click on the docker-compose.yml and click on Compose up
 
-![images]()
-
+![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/d865ffa016a67656a82ba8d4c274a896a4cd2f2c/_docs/assets/week1/container%20running%20properly.png)
 
 When, we can verify if the containers properly running with : ``` docker ps ```
 
-![images]([./assets/docker.jpg](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/fa713a006f3492c899854d4fe10c39f3e3650c53/_docs/assets/week1/dockers%20images.png)
+![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/70b0cf6e0f492802dd68cce6ce4137d0ac73306e/_docs/assets/week1/docker%20ps%20cmd.png)
 
 ## Creating the notification feature :
 

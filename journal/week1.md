@@ -1,37 +1,62 @@
 # Week 1 — App Containerization
 ## Containerization of the backend
 
-To start docker with environment variables, we use
+First of all, we create the Dockerfile in the ```back-flask``` directory : 
+```
+FROM python:3.10-slim-buster
 
+WORKDIR /backend-flask
 
-FRONTEND_URL="*" BACKEND_URL="*" 
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 
-build docke image for the backend with:
+COPY . .
 
+ENV FLASK_ENV=development
 
-To run docker with environment variables, use the following:
+EXPOSE ${PORT}
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
+```
 
-docker run -p 4567:4567 -e FRONTEND_URL='*' -e BACKEND_URL='*'  backend-flask
+To start docker with environment variables, we add them doing this : 
+
+```
+export FRONTEND_URL="*"
+export BACKEND_URL="*"
+
+gp env FRONTEND_URL
+gp env BACKEND_URL
+```
+
+To build the image, i did this command : ```docker build -t backend-flask ./backend-flask```                              
+Then, i use ```docker run -p 4567:4567 -e FRONTEND_URL='*' -e BACKEND_URL='*'  backend-flask``` to run the app with env variables  
 
 
 ## Containerization of the frontend
-Created a docker file for the frontend React js application and ran the following docker command to build the docker image for the frontend
+In the frontend-react-js directory :
+- npm install to install node modules.
+- create Dockerfile to build the docker image for the frontend :
 
+```
+FROM node:16.18
 
-docker build -t frontend-react-js ./rontend-react-js
+ENV PORT=3000
 
-Run the frontend app with :
-docker run -p 3000:3000 -d frontend-react-js
+COPY . /frontend-react-js
+WORKDIR /frontend-react-js
+RUN npm install
+EXPOSE ${PORT}
+CMD ["npm", "start"]
+```
 
-Ran npm command to install all needed dependences need to run node as well npm audit for fix potential vulnerabilities.
+We could use this command to do so : ```docker build -t frontend-react-js ./rontend-react-js```
+Now, we can run the app with : ``` docker run -d -p 3000:3000 frontend-react-js```
 
-npm install 
-npm audit fix --force
+If needed, ran ```npm i```  command still inside this directory to install all needed dependences need to run node 
 
+We can verify that all the images are created using : ``` docker images``` 
 
-with all the images created, the output of docker images will like what's been build 
-
-![docker images](./assets/docker.jpg)
+![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/fa713a006f3492c899854d4fe10c39f3e3650c53/_docs/assets/week1/dockers%20images.png)
 
 ## Running multiple containers with magical dockerfile
 
@@ -64,14 +89,13 @@ networks:
     driver: bridge
     name: cruddur
 ```
-Run the docker-compose.yml to builds both of the frontend & backend in one time with : ``` docker compose up -d ```
+Run the docker-compose.yml to builds both of the frontend & backend in one time with : ``` docker compose -f "docker-composer.yml" up -d --build  ```, or on doing right click on the docker-compose.yml fle and click on Compose up
 
 ![images]()
 
-Plus, we can see our images created using : ``` docker images ```
-![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/fa713a006f3492c899854d4fe10c39f3e3650c53/_docs/assets/week1/dockers%20images.png)
 
 When, we can verify if the containers properly running with : ``` docker ps ```
+
 ![images]([./assets/docker.jpg](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/fa713a006f3492c899854d4fe10c39f3e3650c53/_docs/assets/week1/dockers%20images.png)
 
 ## Creating the notification feature :

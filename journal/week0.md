@@ -10,7 +10,7 @@ Here's a link to [share on Lucid Chart](https://lucid.app/lucidchart/invitations
 ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/25bdf2b82cda361811cd0bde9c19833b3ae9271f/_docs/assets/Cruddur%20logical%20diagram.png)
 
 ### Creation of IAM admin usage with access key :
-![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/user%20mfa%20&%20cloudshell%20link.png)
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/b7364f5aed81e85491f3a3343f20e05772e84858/_docs/assets/week0/user%20mfa%20&%20cloudshell%20link.png)
 
 ### Installing AWS CLI using our GitPod account :
 From within my GitPod terminal, i did the following:

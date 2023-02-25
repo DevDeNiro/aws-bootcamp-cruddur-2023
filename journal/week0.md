@@ -28,7 +28,7 @@ export AWS_DEFAULT_REGION=us-east-1
 Then, to verify if it's work, we can do `aws sts get-caller-identity` :
 ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/3d182c61ca6e3942bee8338288a0519d7e81f54b/_docs/assets/week0/AWS%20identity.png)
 
-### GitPod Configuration :
+### GitPod configuration :
 To avoid having to reconfigure our environment variables every time Gitpod was launched, we made sure to save them in the software configuration. To do this, we use the script from [Andrew Brown's repo](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/week-0/journal/week0.md) which aws-cli is installed and set the cli prompt to auto-complete :
 ```
 tasks:
@@ -67,9 +67,9 @@ aws sns subscribe \
     --protocol=email \
     --notification-endpoint=everlygrandest+bootcamp@gmail.com
 ```
-![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/44871ec0f5f57d2a260b6200eb0bb99f817fc3bd/_docs/assets/aws%20billing%20alarm.png)
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/3dd5ab67c748027d123cd6bd770531a4f27277aa/_docs/assets/week0/Billing-alarm%20created.png)
 
-![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/eefbd9f8801cf0ca781ddeb8ea30d4953ac543e9/_docs/assets/week0/aws%20billing%20alarm.png)
+![image]()
 
 ### Creating a Billing Alarm :
 Using this [json file](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/week-0/aws/json/alarm_config.json.example), we will be updating the `arn` section. Then, do the `aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json` command to set up the alarm

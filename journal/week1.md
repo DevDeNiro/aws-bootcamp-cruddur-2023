@@ -1,7 +1,7 @@
 # Week 1 — App Containerization
 ## Containerization of the backend
 
-First of all, we create the Dockerfile in the ```back-flask``` directory : 
+First of all, i create the Dockerfile in the ```back-flask``` directory : 
 ```
 FROM python:3.10-slim-buster
 
@@ -32,9 +32,11 @@ To build the image, i did this command : ```docker build -t backend-flask ./back
 Then, i use ```docker run -p 4567:4567 -e FRONTEND_URL='*' -e BACKEND_URL='*'  backend-flask``` to run the app with env variables  
 
 To see if the container work properly, go to the ```PORTS``` tabs and look at the status of the container : 
+
 ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/db975d74d1ddfd7efd944b5bc80b93bf09f47556/_docs/assets/week1/open%20ports%20properly.png)
 
 Now, we can launch the url on this route ```api/activities/home``` :
+
 ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/db975d74d1ddfd7efd944b5bc80b93bf09f47556/_docs/assets/week1/backend%20json%20of%20app.png)
 
 ## Containerization of the frontend
@@ -54,7 +56,6 @@ EXPOSE ${PORT}
 CMD ["npm", "start"]
 ```
 
-We could use this command to do so : ```docker build -t frontend-react-js ./rontend-react-js```
 Now, we can run the app with : ```docker run -d -p 3000:3000 frontend-react-js```
 
 If we launch the port related to the front end app, we could see it ! 
@@ -99,7 +100,7 @@ Run the docker-compose.yml to builds both of the frontend & backend in one time 
 
 ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/d865ffa016a67656a82ba8d4c274a896a4cd2f2c/_docs/assets/week1/container%20running%20properly.png)
 
-When, we can verify if the containers properly running with : ``` docker ps ```
+When, we can verify if the containers properly running with : ```docker ps```
 
 ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/70b0cf6e0f492802dd68cce6ce4137d0ac73306e/_docs/assets/week1/docker%20ps%20cmd.png)
 
@@ -129,9 +130,9 @@ I added a new path on the ```openapi-3.0.yml``` for the notification feature lik
                   $ref: '#/components/schemas/Activity'                  
 ```
 
-#### Creation of the service for the flask backend app :
+### Creation of the service for the flask backend app :
 
-I updated my ```app.py``` file, adding a route to the notifications:
+I updated my ```app.py``` file, adding a route for the notifications :
 
 ```
 @app.route("/api/activities/notifications", methods=['GET'])
@@ -177,17 +178,18 @@ I also updated my imports to make a call to the newly created notification servi
 from services.notifications_activities import *
 ```
 
-If we go to the URL searching for ```/api/activities/notifications``` to get the data : 
+If we go to the URL searching for ```/api/activities/notifications```, we can get the data ! 
 
-!image[]
+![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/a460fa12058c436fb641a94eb43e2f8285771006/_docs/assets/week1/backend%20notification%20feature.png)
 
 ###  React Page for Notifications :
 
 - I created the ```NotificationsPage``` like so : https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/c2bd1948608cb55aec4aafce4c21e14dbf61bbb8/frontend-react-js/src/pages/NotificationsFeedPage.js
 - In the src/App.js, i imported the page for the Notifications and add a path to it:
+
 ```
 import NotificationsFeedPage from './pages/NotificationsFeedPage';
-# ... existing code
+### [... some codes]
 {
     path: "/notifications",
     element: <NotificationsFeedPage />
@@ -199,6 +201,7 @@ To extend my ```docker-compose.yml``` file, i setup 2 new volumes :
 
 ### The first one for Postgres :
 
+- To ```docker-compose.yml```, i add this lines of code : 
 ```
 db:
     image: postgres:13-alpine
@@ -212,7 +215,7 @@ db:
       - db:/var/lib/postgresql/data
 ```
 
-Don't forget to add this to make sure the vulome will be mount on the container ! 
+Don't forget to add this volume section to make sure the volume will be mount on the container ! 
 
 ```
 volumes:
@@ -220,7 +223,7 @@ volumes:
     driver: local
 ```
 
-Plus, to install the postgres client into Gitpod, i add this to the ```gitpo.yml``` file : 
+Plus, to install the postgres client into Gitpod, i add this to the ```gitpod.yml``` file : 
 
 ```
   - name: postgres
@@ -231,12 +234,12 @@ Plus, to install the postgres client into Gitpod, i add this to the ```gitpo.yml
       sudo apt install -y postgresql-client-13 libpq-dev
 ```
 
-For now, i can checked if my client was running using  ```psql -Upostgres -h localhost```, enter the password to make a connection to my postgres db and see it's was OK :
+For now, i can checked if my client was running using  ```psql -Upostgres -h localhost``` cmd, enter the password to make a connection to my postgres db and see if it was OK :
 
-!image[]
-
+![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/a460fa12058c436fb641a94eb43e2f8285771006/_docs/assets/week1/psql%20client%20added.png)
 
 ### The second one for DynamoDB :
+- Always on ```docker-compose.yml```, i add this lines of code : 
 
 ```
 dynamodb-local:
@@ -253,7 +256,6 @@ dynamodb-local:
     working_dir: /home/dynamodblocal
  ```
  
- ```
  - I ceated a new DynamoDB table :
  
  ```
@@ -269,6 +271,7 @@ aws dynamodb create-table \
 ```
 
 - Then, i created a table item doing this cmd :
+
 ```
 aws dynamodb put-item \
     --endpoint-url http://localhost:8000 \
@@ -284,9 +287,7 @@ aws dynamodb put-item \
  
  - Finally, to get record that the local DynamoDB was successful, i used this cmd : ```aws dynamodb scan --table-name Music --query "Items" --endpoint-url http://localhost:8000```
  
- !image[]
-
-
+ ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/a460fa12058c436fb641a94eb43e2f8285771006/_docs/assets/week1/scan%20dynamoDB%20is%20working.png)
 
 ### Run the dockerfile CMD as an external script : 
 

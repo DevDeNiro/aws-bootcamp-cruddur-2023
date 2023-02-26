@@ -55,12 +55,12 @@ CMD ["npm", "start"]
 ```
 
 We could use this command to do so : ```docker build -t frontend-react-js ./rontend-react-js```
-Now, we can run the app with : ``` docker run -d -p 3000:3000 frontend-react-js```
+Now, we can run the app with : ```docker run -d -p 3000:3000 frontend-react-js```
 
 If we launch the port related to the front end app, we could see it ! 
 ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/db975d74d1ddfd7efd944b5bc80b93bf09f47556/_docs/assets/week1/frontend%20interface%20of%20the%20application.png)
 
-We can verify that all the images are created using : ``` docker images``` 
+We can verify that all the images are created using : ```docker images``` 
 
 ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/fa713a006f3492c899854d4fe10c39f3e3650c53/_docs/assets/week1/dockers%20images.png)
 
@@ -105,9 +105,9 @@ When, we can verify if the containers properly running with : ``` docker ps ```
 
 ## Creating the notification feature :
 To create the notification feature, i run ```docker compose up``` to started the frontend and backend 
-Then, i document the notification endpoint for the OpenAI Document by adding an endpoint for the notification feateares
+Then, i document the notification endpoint for the OpenAI Document by adding an endpoint for the notification features.
 
-### Flask backend endpoint for the OpenAI Document :
+## Flask backend endpoint for the OpenAI Document :
 
 I added a new path on the ```openapi-3.0.yml``` for the notification feature like this :
 
@@ -194,9 +194,99 @@ import NotificationsFeedPage from './pages/NotificationsFeedPage';
 }
 ```
 ## Setup of new volumes : 
-### Postgres :
 
-### DynamoDB :
+To extend my ```docker-compose.yml``` file, i setup 2 new volumes :
+
+### The first one for Postgres :
+
+```
+db:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+```
+
+Don't forget to add this to make sure the vulome will be mount on the container ! 
+
+```
+volumes:
+  db:
+    driver: local
+```
+
+Plus, to install the postgres client into Gitpod, i add this to the ```gitpo.yml``` file : 
+
+```
+  - name: postgres
+    init: |
+      curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+      echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+      sudo apt update
+      sudo apt install -y postgresql-client-13 libpq-dev
+```
+
+For now, i can checked if my client was running using  ```psql -Upostgres -h localhost```, enter the password to make a connection to my postgres db and see it's was OK :
+
+!image[]
+
+
+### The second one for DynamoDB :
+
+```
+dynamodb-local:
+    # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa
+    # We needed to add user:root to get this working.
+    user: root
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+ ```
+ 
+ ```
+ - I ceated a new DynamoDB table :
+ 
+ ```
+aws dynamodb create-table \
+    --endpoint-url http://localhost:8000 \
+    --table-name Music \
+    --attribute-definitions \
+        AttributeName=Artist,AttributeType=S \
+        AttributeName=SongTitle,AttributeType=S \
+    --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
+    --table-class STANDARD
+```
+
+- Then, i created a table item doing this cmd :
+```
+aws dynamodb put-item \
+    --endpoint-url http://localhost:8000 \
+    --table-name Music \
+    --item \
+        '{"Artist": {"S": "No One You Know"}, "SongTitle": {"S": "Call Me Today"}, "AlbumTitle": {"S": "Somewhat Famous"}}' \
+    --return-consumed-capacity TOTAL  
+ ```
+ 
+ -  We can list tables doing this cmd :
+ 
+ ```aws dynamodb list-tables --endpoint-url http://localhost:8000```
+ 
+ - Finally, to get record that the local DynamoDB was successful, i used this cmd : ```aws dynamodb scan --table-name Music --query "Items" --endpoint-url http://localhost:8000```
+ 
+ !image[]
+
+
 
 ### Run the dockerfile CMD as an external script : 
 

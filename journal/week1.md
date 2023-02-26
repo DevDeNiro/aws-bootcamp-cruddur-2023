@@ -104,10 +104,33 @@ When, we can verify if the containers properly running with : ``` docker ps ```
 ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/70b0cf6e0f492802dd68cce6ce4137d0ac73306e/_docs/assets/week1/docker%20ps%20cmd.png)
 
 ## Creating the notification feature :
-
+To create the notification feature, i run ```docker compose up``` to started the frontend and backend 
 ### Document the Notification Endpoint for the OpenAI Document :
 
+Add an endpoint for the notification feateares
+
 ### Flask backend endpoint for the OpenAI Document :
+
+I added a new path on the ```openapi-3.0.yml``` for the notification feature like this :
+
+```
+ /api/activities/notifications:
+    get:
+      description: 'Return a feed of activity for all of the people i follow'
+      tags:
+        - activities
+      parameters: []
+      responses:
+        '200':
+          description: Returns an array of activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'                  
+```
+
 
 ###  React Page for Notifications :
 

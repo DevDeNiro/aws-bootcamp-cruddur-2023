@@ -128,6 +128,9 @@ I added a new path on the ```openapi-3.0.yml``` for the notification feature lik
                 items:
                   $ref: '#/components/schemas/Activity'                  
 ```
+
+#### Creation of the service for the flask backend app :
+
 I updated my ```app.py``` file, adding a route to the notifications:
 
 ```

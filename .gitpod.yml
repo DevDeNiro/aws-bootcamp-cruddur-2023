@@ -29,6 +29,12 @@ ports:
   - name: backend
     port: 4567
     visibility: public
+  - name: dynamodb 
+    port: 8000
+    visibility: public
+  - name: postgres
+    port: 5432
+    visibility: public
   - name: xray-daemon
     port: 2000
     visibility: public

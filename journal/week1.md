@@ -105,9 +105,7 @@ When, we can verify if the containers properly running with : ``` docker ps ```
 
 ## Creating the notification feature :
 To create the notification feature, i run ```docker compose up``` to started the frontend and backend 
-### Document the Notification Endpoint for the OpenAI Document :
-
-Add an endpoint for the notification feateares
+Then, i document the notification endpoint for the OpenAI Document by adding an endpoint for the notification feateares
 
 ### Flask backend endpoint for the OpenAI Document :
 
@@ -130,7 +128,55 @@ I added a new path on the ```openapi-3.0.yml``` for the notification feature lik
                 items:
                   $ref: '#/components/schemas/Activity'                  
 ```
+I updated my ```app.py``` file, adding a route to the notifications:
 
+```
+@app.route("/api/activities/notifications", methods=['GET'])
+def data_notifications():
+  data = NotificationActivities.run()
+  return data, 200
+```
+
+Then, in vices, I created the notifications_activities.py microservice and populated it like so:
+
+```
+from datetime import datetime, timedelta, timezone
+
+class NotificationActivities:
+    def run():
+        now = datetime.now(timezone.utc).astimezone()
+        results = [{
+        'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
+        'handle':  'star',
+        'message': 'Let your light shine!',
+        'created_at': (now - timedelta(days=2)).isoformat(),
+        'expires_at': (now + timedelta(days=5)).isoformat(),
+        'likes_count': 5,
+        'replies_count': 1,
+        'reposts_count': 0,
+        'replies': [{
+            'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea67',
+            'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
+            'handle':  'Worth',
+            'message': 'This post has honor!',
+            'likes_count': 0,
+            'replies_count': 0,
+            'reposts_count': 0,
+            'created_at': (now - timedelta(days=2)).isoformat()
+        }],
+        }]
+        return results
+```
+
+I also updated my imports to make a call to the newly created notification service in app.py
+
+```
+from services.notifications_activities import *
+```
+
+I tested by heading over to the BE URL and appending /api/activities/notifications to get the data:
+
+!image[]
 
 ###  React Page for Notifications :
 

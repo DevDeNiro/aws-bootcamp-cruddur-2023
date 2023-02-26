@@ -140,7 +140,7 @@ def data_notifications():
   return data, 200
 ```
 
-Then, in vices, I created the notifications_activities.py microservice and populated it like so:
+Then, in the services, i created the notifications_activities.py microservice and populated it like so:
 
 ```
 from datetime import datetime, timedelta, timezone
@@ -171,13 +171,13 @@ class NotificationActivities:
         return results
 ```
 
-I also updated my imports to make a call to the newly created notification service in app.py
+I also updated my imports to make a call to the newly created notification service in ```app.py```
 
 ```
 from services.notifications_activities import *
 ```
 
-I tested by heading over to the BE URL and appending /api/activities/notifications to get the data:
+If we go to the URL searching for ```/api/activities/notifications``` to get the data : 
 
 !image[]
 

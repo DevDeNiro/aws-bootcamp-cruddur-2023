@@ -59,6 +59,7 @@ CMD ["npm", "start"]
 Now, we can run the app with : ```docker run -d -p 3000:3000 frontend-react-js```
 
 If we launch the port related to the front end app, we could see it ! 
+
 ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/db975d74d1ddfd7efd944b5bc80b93bf09f47556/_docs/assets/week1/frontend%20interface%20of%20the%20application.png)
 
 We can verify that all the images are created using : ```docker images``` 
@@ -280,10 +281,8 @@ aws dynamodb put-item \
         '{"Artist": {"S": "No One You Know"}, "SongTitle": {"S": "Call Me Today"}, "AlbumTitle": {"S": "Somewhat Famous"}}' \
     --return-consumed-capacity TOTAL  
  ```
- 
- -  We can list tables doing this cmd :
- 
- ```aws dynamodb list-tables --endpoint-url http://localhost:8000```
+
+ -  We can list tables doing this cmd : ```aws dynamodb list-tables --endpoint-url http://localhost:8000```
  
  - Finally, to get record that the local DynamoDB was successful, i used this cmd : ```aws dynamodb scan --table-name Music --query "Items" --endpoint-url http://localhost:8000```
  

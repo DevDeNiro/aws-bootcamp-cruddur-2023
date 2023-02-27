@@ -317,7 +317,18 @@ To try if the external script is running successfully, i run this CMD : ```docke
 
 ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/c306bfc2a17b92a9f7d5955a871673acd4b538b2/_docs/assets/week1/external%20script%20running%20OK.png)
 
-### Implement a healthcheck in the V3 Docker compose file : 
+### Implement a healthcheck Docker compose file : 
+
+- I implement this script under the backend section to run check : 
+
+```
+ healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:4567/api/activities/home || exit 1"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+ ```
 
 ### implement some of best practice in my Dockerfile :
 

@@ -334,12 +334,11 @@ Notheless, it didn't work with the docker-compose.yml. I can't figured out why i
 
 ### install Docker on your localmachine :
 
-- I install the docker Desktop software, and simply run this command to launch the containers :
+I install the docker Desktop software, and simply run this command to launch the containers :
 
 - ```npm i``` on the frontend-react-js folder 
 - ```docker compose -f "docker-composer.yml" up -d --build``` on the root project 
 
-![image]()
-
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/51382a1da1d6886002337d7d2d2f4a63e4dd1961/_docs/assets/week1/dockerDesktop%20launch%20.png)
 
 ### Launch an EC2 instance that has docker installed, and pull a container : 

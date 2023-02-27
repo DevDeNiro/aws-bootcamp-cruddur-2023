@@ -317,6 +317,8 @@ To try if the external script is running successfully, i run this CMD : ```docke
 
 ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/c306bfc2a17b92a9f7d5955a871673acd4b538b2/_docs/assets/week1/external%20script%20running%20OK.png)
 
+Notheless, it didn't work with the docker-compose.yml. I can't figured out why it didn't work
+
 ### Implement a healthcheck Docker compose file : 
 
 - I implement this script under the backend section to run check : 
@@ -330,8 +332,14 @@ To try if the external script is running successfully, i run this CMD : ```docke
       start_period: 40s
  ```
 
-### implement some of best practice in my Dockerfile :
-
 ### install Docker on your localmachine :
+
+- I install the docker Desktop software, and simply run this command to launch the containers :
+
+- ```npm i``` on the frontend-react-js folder 
+- ```docker compose -f "docker-composer.yml" up -d --build``` on the root project 
+
+![image]()
+
 
 ### Launch an EC2 instance that has docker installed, and pull a container : 

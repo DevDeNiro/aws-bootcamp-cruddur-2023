@@ -290,6 +290,39 @@ aws dynamodb put-item \
 
 ### Run the dockerfile CMD as an external script : 
 
+- To create the external script, i created a file name ```external-script.sh``` at the root of the backend-flask folder where i copied the command who was launching the Dockerfile :
+
+``` 
+#!/BIN/BASH
+
+python3 -m flask run --host=0.0.0.0 --port=4567
+
+```
+
+To execute my external script, i've done three things : 
+- Firstly into my Dockerfile, i copy the ```external-script.sh``` to the image : 
+
+```
+ADD external-script.sh /backend-flask/external-script.sh
+```
+
+- Then, i change the permission of the file to allow the execution of the script : 
+
+```
+RUN chmod 777 /backend-flask/external-script.sh
+```
+
+- Finally, i run the script :  
+
+```
+CMD /backend-flask/external-script.sh
+```
+
+To try if the external script is running successfully, i run this CMD : 
+```docker build -t backend-flask ./backend-flask```
+
+![image]()
+
 ### Implement a healthcheck in the V3 Docker compose file : 
 
 ### implement some of best practice in my Dockerfile :

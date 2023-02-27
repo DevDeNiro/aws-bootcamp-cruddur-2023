@@ -185,7 +185,7 @@ If we go to the URL searching for ```/api/activities/notifications```, we can ge
 
 ###  React Page for Notifications :
 
-- I created the ```NotificationsPage``` like so : https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/c2bd1948608cb55aec4aafce4c21e14dbf61bbb8/frontend-react-js/src/pages/NotificationsFeedPage.js
+- I created the ```NotificationsPage``` like so : [notificationPageFeatures.js](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/c2bd1948608cb55aec4aafce4c21e14dbf61bbb8/frontend-react-js/src/pages/NotificationsFeedPage.js)
 - In the src/App.js, i imported the page for the Notifications and add a path to it:
 
 ```

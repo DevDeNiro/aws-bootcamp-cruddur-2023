@@ -296,7 +296,6 @@ aws dynamodb put-item \
 #!/BIN/BASH
 
 python3 -m flask run --host=0.0.0.0 --port=4567
-
 ```
 
 To execute my external script, i've done three things : 
@@ -312,16 +311,11 @@ ADD external-script.sh /backend-flask/external-script.sh
 RUN chmod 777 /backend-flask/external-script.sh
 ```
 
-- Finally, i run the script :  
+- Finally, i run the script :  ```CMD /backend-flask/external-script.sh```
 
-```
-CMD /backend-flask/external-script.sh
-```
+To try if the external script is running successfully, i run this CMD : ```docker build -t backend-flask ./backend-flask```
 
-To try if the external script is running successfully, i run this CMD : 
-```docker build -t backend-flask ./backend-flask```
-
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/c306bfc2a17b92a9f7d5955a871673acd4b538b2/_docs/assets/week1/external%20script%20running%20OK.png)
 
 ### Implement a healthcheck in the V3 Docker compose file : 
 

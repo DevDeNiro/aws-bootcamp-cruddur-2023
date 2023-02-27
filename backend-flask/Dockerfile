@@ -16,6 +16,12 @@ COPY . .
 ENV FLASK_ENV=development
 
 EXPOSE ${PORT}
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
 
+ADD external-script.sh /backend-flask/external-script.sh
+
+RUN chmod 777 /backend-flask/external-script.sh
+
+CMD /backend-flask/external-script.sh
+
+# CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
 #python3 -m flask run --host=0.0.0.0 --port=4567

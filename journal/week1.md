@@ -286,7 +286,7 @@ aws dynamodb put-item \
  
  - Finally, to get record that the local DynamoDB was successful, i used this cmd : ```aws dynamodb scan --table-name Music --query "Items" --endpoint-url http://localhost:8000```
  
- ![images](https://github.com/Noodles-boop/aws-bootcamp-cruddur-
+ ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-
  2023/blob/a460fa12058c436fb641a94eb43e2f8285771006/_docs/assets/week1/scan%20dynamoDB%20is%20working.png)
 
 ### Run the dockerfile CMD as an external script : 
@@ -348,12 +348,12 @@ I install the docker Desktop software, and simply run this command to launch the
 
 - I created a tag for the locally created image to the docker hub. This means i had to tag the image with the docker hub username like so :
 
-``` docker tag aws-bootcamp-cruddur-2023-frontend-react-js noodlesboop/aws-bootcamp-cruddur-2023-frontend-react-js```
+``` docker tag aws-bootcamp-cruddur-2023-frontend-react-js noodlesboop/aws-bootcamp-cruddur-2023-frontend-react-js```            
 ```docker tag aws-bootcamp-cruddur-2023-backend-flask noodlesboop/aws-bootcamp-cruddur-2023-backend-flask```
 
 - Then, I push the image to the Docker hub using the push command : 
-
-```docker push noodlesboop/aws-bootcamp-cruddur-2023-frontend-react-js ```
+ 
+```docker push noodlesboop/aws-bootcamp-cruddur-2023-frontend-react-js ```                       
 ```docker push noodlesboop/aws-bootcamp-cruddur-2023-backend-flask```
 
  Link of my [docker account](https://hub.docker.com/u/noodlesboop)

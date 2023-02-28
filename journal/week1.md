@@ -344,7 +344,7 @@ I install the docker Desktop software, and simply run this command to launch the
 
 ### Push and tag the images to DockerHub :
 
-- After building the docker-compose on my local machine, i verify if was correctly connected to Docker Hub with ```docker login```, list all my images with ```docker images`` 
+- After building the docker-compose on my local machine, i verify if was correctly connected to Docker Hub with ```docker login```, list all my images with ```docker images```
 
 - I created a tag for the locally created image to the docker hub. This means i had to tag the image with the docker hub username like so :
 

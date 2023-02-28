@@ -360,3 +360,4 @@ I install the docker Desktop software, and simply run this command to launch the
 
 ### Launch an EC2 instance that has docker installed, and pull a container : 
 
+I try to run my own docker process but it didn't work :(

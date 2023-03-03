@@ -286,8 +286,7 @@ aws dynamodb put-item \
  
  - Finally, to get record that the local DynamoDB was successful, i used this cmd : ```aws dynamodb scan --table-name Music --query "Items" --endpoint-url http://localhost:8000```
  
- ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-
- 2023/blob/a460fa12058c436fb641a94eb43e2f8285771006/_docs/assets/week1/scan%20dynamoDB%20is%20working.png)
+ ![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/13b9d1540943a042fab720129cf6bcc1d0e6e49f/_docs/assets/week1/scan%20dynamoDB%20is%20working.png)
 
 ### Run the dockerfile CMD as an external script : 
 
@@ -333,7 +332,7 @@ Notheless, it didn't work with the docker-compose.yml. I can't figured out why i
       start_period: 40s
  ```
 
-### install Docker on your localmachine :
+### Install Docker on your localmachine :
 
 I install the docker Desktop software, and simply run this command to launch the containers :
 

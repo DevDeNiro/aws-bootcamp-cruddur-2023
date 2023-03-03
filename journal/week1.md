@@ -364,11 +364,11 @@ I install the docker Desktop software, and simply run this command to launch the
 - generate Key to connect in SSH
 - Connect to EC2 via SSH via my bash terminal 
 
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/99ba350b341fa97e988b9cdca4bc5b831c7913e6/_docs/assets/week1/test%20to%20pull%20docker%20img.png)
 
 - Into the directory where the key generated is stored : 
 
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/99ba350b341fa97e988b9cdca4bc5b831c7913e6/_docs/assets/week1/ssh%20to%20ec2.png)
 
 - Update the linux machine : 
 ```sudo apt update && sudo apt upgrade -y```
@@ -381,6 +381,6 @@ I install the docker Desktop software, and simply run this command to launch the
 
 - Pull the one i want, and use it :D !
 
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/99ba350b341fa97e988b9cdca4bc5b831c7913e6/_docs/assets/week1/docker%20pull%20&%20image.png)
 
 - To exit from the instance, type ```exit```

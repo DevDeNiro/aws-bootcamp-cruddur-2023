@@ -360,4 +360,27 @@ I install the docker Desktop software, and simply run this command to launch the
 
 ### Launch an EC2 instance that has docker installed, and pull a container : 
 
-I try to run my own docker process but it didn't work :(
+- I created a new EC2 instance 
+- generate Key to connect in SSH
+- Connect to EC2 via SSH via my bash terminal 
+
+![image]()
+
+- Into the directory where the key generated is stored : 
+
+![image]()
+
+- Update the linux machine : 
+```sudo apt update && sudo apt upgrade -y```
+
+- Download docker into the linux machine : 
+```sudo apt install docker.io -y```
+
+- Login to my docker account 
+```sudo docker login```
+
+- Pull the one i want, and use it :D !
+
+![image]()
+
+- To exit from the instance, type ```exit```

@@ -5,6 +5,7 @@ tracer = trace.get_tracer("home.activities")
 
 class HomeActivities:
   def run():
+    # Logger.info("Cloudwatch logs activate")
     # Adding Attributes to Spans 
     with tracer.start_as_current_span("home-activites-mock-data"):
       span = trace.get_current_span()

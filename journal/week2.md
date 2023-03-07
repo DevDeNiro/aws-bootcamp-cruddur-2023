@@ -79,7 +79,14 @@ https://docs.honeycomb.io/getting-data-in/opentelemetry/python/
 HONEYCOMB SETUP ! 
 
 ### [X]  Implement AWS X-RAX for FLASK
-### [ ]  Implement CloudWatch Logs
+### [X]  Implement CloudWatch Logs
+
+Disable xRay / Cloudwatch to avoid any kind of spends 
+
+Following the instructions of Andrew Brown, i setup the Logs for Cloudwatch as you can see bellow : 
+
+![image]()
+
 ### [ ]  Implement Rollbar
 ### [ ]  Add Deamon Service to Docker Compose
 ### [ ]  Instrument Honeycomb for the frontend-application to observe network latency between frontend and backend[HARD]

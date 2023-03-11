@@ -70,9 +70,9 @@ export OTEL_SERVICE_NAME="your-service-name"
 we create on home_activities a mock of data to capture traces on Honeycomb as you can see on my home_activities.py()
 
 - If we start a new activities on ```api/activities/home``` endpoints, we can see the span on Honeycomb :
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/e84aa032b79f9298ce1d2e7f8fbdcf5d3bbd8701/_docs/assets/week2/recent%20track%20from%20activities%20home.png)
 
-For more informations on the SDK, check the documentation of HeneyComb : https://docs.honeycomb.io/getting-data-in/opentelemetry/python/
+For more informations on the SDK, check the documentation of HeneyComb : [link](https://docs.honeycomb.io/getting-data-in/opentelemetry/python/)
 
 ### Implement AWS X-RAY
 

@@ -2,62 +2,58 @@
 
 ### Implement HoneyComb service : 
 
-Honeycomb is a service based on OTEL : OPEN TELEMETRY : standard pour faire de la tetelemetry ... To dig deepr 
+Honeycomb is a powerful tool for monitoring and troubleshooting software applications. It is based on OpenTelemetry(OTEL), it's an open-source framework that provides a set of APIs, libraries, and agents to collect distributed traces, metrics, and logs from software applications.
 
-- Firsly, setup the HONEYCOMB_API_KEY to the env variables in gitpod :
+#### Using Honeycomb : 
+
+Firsly, I signed up for an account and had an environmnent created. I persist the HONEYCOMB_API_KEY get from the environment, to the env variables in gitpod, with the service name determine in the span : We Configure OpenTelemetry to send events to Honeycomb using environment variables.
  
 ```
 export HONEYCOMB_API_KEY="YOUR_API_KEY"
-gp env HONEYCOMB_API_KEY="YOUR_API_KEY"
-```
-
-- Determine the service name in the span : 
-
-```
 export HONEYCOMB_SERVICE_NAME="Cruddur"
+
+gp env HONEYCOMB_API_KEY="YOUR_API_KEY"
 gp env HONEYCOMB_SERVICE_NAME="Cruddur"
 ```
 
-- Create a dataset with Honeycomb :
+- To Install packages, we setup manually those library into the requirements file, which are going to be run with cmd :
+```pip install -r requirements.txt```: 
 
-- Install packages - we setup manually: 
-
-```
-pip install opentelemetry-api \
-    opentelemetry-sdk \
-    opentelemetry-exporter-otlp-proto-http \
-    opentelemetry-instrumentation-flask \
-    opentelemetry-instrumentation-requests  
+```py
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-exporter-otlp-proto-http
+opentelemetry-instrumentation-flask
+opentelemetry-instrumentation-requests  
 ```
 
 Add these lines to your existing Flask app initialization file ```app.py```. These updates will create and initialize a tracer and Flask instrumentation to send data to Honeycomb:
 
-```
+```py
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-```
 
-- Initialize tracing and an exporter that can send data to Honeycomb
-```
+[... some code]
+
+# Initialize tracing and an exporter that can send data to Honeycomb
 provider = TracerProvider()
 processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
-```
 
-- Initialize automatic instrumentation with Flask
-```
+[... some code]
+
+# Initialize automatic instrumentation with Flask
 app = Flask(__name__)
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 ```
 
-Configure OpenTelemetry to send events to Honeycomb using environment variables.
 The header x-honeycomb-team is your API key. Your service name will be used as the Service Dataset in Honeycomb, which is where data is stored. The service name is specified by OTEL_SERVICE_NAME.
 
 
@@ -69,26 +65,23 @@ export OTEL_EXPORTER_OTLP_HEADERS="x-honeycomb-team=scQeIOjsMEeUwN7IIKhTmF"
 export OTEL_SERVICE_NAME="your-service-name"
 ```
 
-- After we setup our env variables, we create on home_activities, which contains our mock, working capture on Honeycomb 
+#### Running traces in HoneyComb
 
-- Ajout d'un attribut au spans après création du span :
-picture
+we create on home_activities a mock of data to capture traces on Honeycomb as you can see on my home_activities.py()
 
-https://docs.honeycomb.io/getting-data-in/opentelemetry/python/
+- If we start a new activities on ```api/activities/home``` endpoints, we can see the span on Honeycomb :
+![image]()
 
-HONEYCOMB SETUP ! 
+For more informations on the SDK, check the documentation of HeneyComb : https://docs.honeycomb.io/getting-data-in/opentelemetry/python/
 
-### [X]  Implement AWS X-RAX for FLASK
-### [X]  Implement CloudWatch Logs
+### Implement AWS X-RAY
 
-Disable xRay / Cloudwatch to avoid any kind of spends 
+
+
+### Implement Rollbar
+### Implement CloudWatch
 
 Following the instructions of Andrew Brown, i setup the Logs for Cloudwatch as you can see bellow : 
 
 ![image]()
-
-### [ ]  Implement Rollbar
-### [ ]  Add Deamon Service to Docker Compose
-### [ ]  Instrument Honeycomb for the frontend-application to observe network latency between frontend and backend[HARD]
-### [ ]  Add custom instrumentation to Honeycomb to add more attributes eg. UserId, Add a custom span
-### [ ]  Run custom queries in Honeycomb and save them later eg. Latency by UserID, Recent Traces
+Disable xRay / Cloudwatch to avoid any kind of spends 

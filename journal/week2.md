@@ -76,10 +76,15 @@ For more informations on the SDK, check the documentation of HeneyComb : https:/
 
 ### Implement AWS X-RAY
 
-
+X-ray is a service provided by Amazon Web Services (AWS) that allows developers to trace requests through their distributed applications. It provides a visualization of how requests propagate through an application and how resources are utilized, making it easier to identify performance issues and troubleshoot problems.
 
 ### Implement Rollbar
+
+Rollbar is an error tracking and debugging tool that helps developers monitor and troubleshoot errors in their software applications. It allows developers to capture and analyze errors and exceptions in real-time, providing insights into application behavior and performance.
+
 ### Implement CloudWatch
+
+Amazon CloudWatch is a monitoring and observability service provided by Amazon Web Services (AWS). It allows developers and system administrators to collect and track metrics, collect and monitor log files, and set alarms for resource utilization and performance.
 
 Following the instructions of Andrew Brown, i setup the Logs for Cloudwatch as you can see bellow : 
 

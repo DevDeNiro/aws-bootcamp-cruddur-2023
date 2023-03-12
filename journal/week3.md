@@ -8,7 +8,11 @@ In this sections, we are covering the establishment of SignUp / SignIn / Recover
 To configure the user group sends emails to users, we will use cognito for now : SES on next session 🕒 
   
 ### Add Amplify 
- To managed auth to Cognito, we are going to use Amplify which is a JavaScript library that provides a set of utility functions and abstractions for simplifying the development of web applications. We use it to simplified the integration of Cognito. 
+
+Install sdk on frontend folder :
+```npm i aws-amplify --save```
+
+To managed auth to Cognito, we are going to use Amplify which is a JavaScript library that provides a set of utility functions and abstractions for simplifying the development of web applications. We use it to simplified the integration of Cognito. 
  
  To do so, we add to app.JS from frontend folder this line of codes to setup the [library](https://docs.amplify.aws/lib/auth/emailpassword/q/platform/js/) :
 

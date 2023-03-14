@@ -403,3 +403,46 @@ function PageNotFound() {
 ```
 
 ![image]()
+
+## Implement a Container Sidecar Pattern using official Aws-jwt-verify.js library
+
+
+- To try to implememt this step, i first start by create a new folder where my Dockerfile will exist
+
+```
+FROM node:16.18
+WORKDIR /jwt-verification-process
+RUN npm install aws-jwt-verify
+COPY . .
+CMD ["npm", "start"]
+```
+
+- I bind this new container with the front one like so : 
+
+```
+sidecar:
+    build: ./jwt-verification-process
+    volumes:
+    - ./jwt-verification-process:/jwt-verification-process
+    - ./frontend-react-js:/frontend-react-js
+```
+
+- Inside my new folder, i created a new [index.js]() which will have to handle the verification of JWT 
+
+This code exports a function called ```verifyJwt``` that takes a JWT token as an input and verifies whether it is valid by decoding and checking against the user pool and user name in the Amazon Cognito user pool.
+
+- Finally, i just have to import the function and use the global variable configure by Amplify to check if the JWT is okay or not :
+
+```js
+async function main() {
+  const jwtToken = 'YOUR_JWT_TOKEN_HERE';
+  const {isValid, decoded} = await jwtVerifier.verifyJwt(jwtToken);
+  if (isValid) {
+    console.log(`JWT token is valid. Decoded contents: ${JSON.stringify(decoded)}`);
+  } else {
+    console.log('JWT token is not valid');
+  }
+}
+
+main();
+```

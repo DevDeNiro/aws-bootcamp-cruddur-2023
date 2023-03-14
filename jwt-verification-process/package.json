@@ -1,0 +1,10 @@
+{
+  "name": "jwt-verification-process",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "aws-jwt-verify": "^1.0.0"
+  }
+}

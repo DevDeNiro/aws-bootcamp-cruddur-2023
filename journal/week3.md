@@ -3,7 +3,7 @@
 
 In this sections, we are covering the establishment of SignUp / SignIn / Recovery / Confirmation pages.
 
-- Create a new user pool. By doing this, only check email options attribute to signIn, otherwise you will get error in the sigIn stage because the username is configure as email allias :
+- Create a new user pool sg the wizard of AWS. By doing this, only check email options attribute to signIn, otherwise you will get error in the sigIn stage because the username is configure as email allias :
 
 To configure the user group sends emails to users, we will use cognito for now : SES on next session 🕒 
   
@@ -118,7 +118,7 @@ Then, add attribute to the user account and check if its added :  ![image]()
 
 We can store now information on Cognito 
 
-#### SignUp Page  
+#### In SignUp Page  
 
 ```js
 import { Auth } from 'aws-amplify';
@@ -159,7 +159,7 @@ After adding the right property, SignIn -> Confirm the account by adding the ver
 
 Check into the Cognito pannel to see if its verify :
 
-#### confirmation page
+#### In Confirmation page
 
 ```js
 const resend_code = async (event) => {
@@ -194,7 +194,7 @@ const onsubmit = async (event) => {
 }
 ```
 
-#### Recovery page
+#### In Recovery page
 
 ```js
 import { Auth } from 'aws-amplify';

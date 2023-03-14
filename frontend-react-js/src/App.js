@@ -13,7 +13,8 @@ import React from 'react';
 import process from 'process';
 import {
   createBrowserRouter,
-  RouterProvider
+  RouterProvider,
+  Link
 } from "react-router-dom";
 
 Amplify.configure({
@@ -67,8 +68,21 @@ const router = createBrowserRouter([
   {
     path: "/forgot",
     element: <RecoverPage />
+  }, 
+  { path:"*",
+     element: <PageNotFound />
   }
 ]);
+
+function PageNotFound() {
+  return (
+    <div className='body-error'>
+      <h1>404 Not Found</h1>
+      <p className='Link'>The page you are looking for does not exist.</p>
+        <Link to = '/' >Go back to home page</Link>
+    </div>
+  );
+}
 
 function App() {
   return (

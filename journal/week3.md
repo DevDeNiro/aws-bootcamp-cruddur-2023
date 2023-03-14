@@ -323,3 +323,83 @@ if cognito_user_id != None:
 ```
 
 Token is still stored even if we logout, so the actual workaround is to clear the localStorage by adding to signOut function in ProfileInfo.js: ```localStorage.removeItem('access_token')```
+
+## Try to write a Flask Middleware
+
+To do so, i'll try to do something like this :
+
+- Implement a middleware using the ```CognitoJwtToken``` class to bind parameters :
+
+```py
+class JwtMiddleware:
+    def __init__(self,  user_pool_id, user_pool_client_id, region):
+        self.jwt_token = CognitoJwtToken(user_pool_id, user_pool_client_id, region)
+
+    def __call__(self, environ, start_response):
+        path = request.path
+        if path.startswith('/api'):
+            auth_header = request.headers.get('Authorization', None)
+            if auth_header:
+                token = auth_header.split(' ')[1]
+                try:
+                    claims = self.jwt_token.verify(token)
+                    request.environ['jwt_claims'] = claims
+                except Exception as e:
+                    response = Response(str(e), status=401)
+                    return response(environ, start_response)
+        return self.app(environ, start_response)
+```
+
+- Call it by instanciate the class from ```app.py``` 
+
+```py
+cognito_jwt_token = JwtMiddleware(
+  user_pool_id=os.getenv("AWS_COGNITO_USER_POOL_ID"),
+  user_pool_client_id=os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
+  region=os.getenv("AWS_DEFAULT_REGION")
+)
+```
+
+- Starting to lauch a new branch to return logic :
+
+```py
+@app.route('/protected')
+def protected_route():
+    jwt_claims = request.environ.get('jwt_claims')
+    if jwt_claims:
+        user_status = jwt_claims.get('user_status')
+        if user_status == 'active':
+            return 'You have access to the protected route.'
+        else:
+            return 'Your account is not active.'
+    else:
+        return 'You must be logged in to access this route.'
+```
+
+But it doesnt work ;(. 
+
+- Firstly, i got a CORS exception on the client side
+
+![image]()
+
+- Secondly, the user is not pass on the serveur side 
+
+By the way, I took the opportunity to change the error message to have something look more familiar 
+
+```js
+  { path:"*",
+     element: <PageNotFound />
+  }
+
+function PageNotFound() {
+  return (
+    <div className='body-error'>
+      <h1>404 Not Found</h1>
+      <p className='Link'>The page you are looking for does not exist.</p>
+        <Link to = '/' >Go back to home page</Link>
+    </div>
+  );
+}
+```
+
+![image]()

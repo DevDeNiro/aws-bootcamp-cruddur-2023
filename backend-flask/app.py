@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, request, abort
 from flask import request
 from flask_cors import CORS, cross_origin
+from jose import jwt
 import os
 
 # CloudWatch Logs ----
@@ -37,7 +38,7 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from aws_xray_sdk.core import xray_recorder
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
-from lib.cognito_jwt_token import CognitoJwtToken, extract_access_token, TokenVerifyError
+from lib.cognito_jwt_token import CognitoJwtToken, JwtMiddleware, extract_access_token, TokenVerifyError
 
 # Initialize tracing and an exporter that can send data to Honeycomb
 provider = TracerProvider()
@@ -47,14 +48,34 @@ provider.add_span_processor(processor)
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
 
+
 # Initialize automatic instrumentation with Flask
 app = Flask(__name__)
+
 
 cognito_jwt_token = CognitoJwtToken(
   user_pool_id=os.getenv("AWS_COGNITO_USER_POOL_ID"),
   user_pool_client_id=os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
   region=os.getenv("AWS_DEFAULT_REGION")
 )
+
+# cognito_jwt_token = JwtMiddleware(
+#   user_pool_id=os.getenv("AWS_COGNITO_USER_POOL_ID"),
+#   user_pool_client_id=os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
+#   region=os.getenv("AWS_DEFAULT_REGION")
+# )
+
+# @app.route('/protected')
+# def protected_route():
+#     jwt_claims = request.environ.get('jwt_claims')
+#     if jwt_claims:
+#         user_status = jwt_claims.get('user_status')
+#         if user_status == 'active':
+#             return 'You have access to the protected route.'
+#         else:
+#             return 'Your account is not active.'
+#     else:
+#         return 'You must be logged in to access this route.'
 
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
@@ -65,6 +86,7 @@ xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder)
 
 # Configuring Logger to Use CloudWatch
+
 # LOGGER = logging.getLogger(__name__)
 # LOGGER.setLevel(logging.DEBUG)
 # console_handler = logging.StreamHandler()

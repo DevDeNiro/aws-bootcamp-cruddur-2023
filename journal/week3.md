@@ -427,7 +427,7 @@ sidecar:
     - ./frontend-react-js:/frontend-react-js
 ```
 
-- Inside my new folder, i created a new [index.js]() which will have to handle the verification of JWT 
+- Inside my new folder, i created a new [jwtVerifier.js](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/30deb5392d5b555c44826540c7fa291a8256aa13/jwt-verification-process/jwtVerifier.js) which will have to handle the verification of JWT 
 
 This code exports a function called ```verifyJwt``` that takes a JWT token as an input and verifies whether it is valid by decoding and checking against the user pool and user name in the Amazon Cognito user pool.
 

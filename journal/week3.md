@@ -1,5 +1,5 @@
 # Week 3 — Decentralized Authentication
-## Userauthentification pages in FrontEnd :
+## User Authentification pages in FrontEnd :
 
 In this sections, we are covering the establishment of SignUp / SignIn / Recovery / Confirmation pages.
 
@@ -120,7 +120,7 @@ We can store now information on Cognito
 
 #### SignUp Page  
 
-```
+```js
 import { Auth } from 'aws-amplify';
 
   const onsubmit = async (event) => {
@@ -161,7 +161,7 @@ Check into the Cognito pannel to see if its verify :
 
 #### confirmation page
 
-```
+```js
 const resend_code = async (event) => {
   setCognitoErrors('')
   try {
@@ -196,7 +196,7 @@ const onsubmit = async (event) => {
 
 #### Recovery page
 
-```
+```js
 import { Auth } from 'aws-amplify';
 
 const onsubmit_send_code = async (event) => {
@@ -239,7 +239,7 @@ To do so, In HomeFeedPage.js, grab this code into loadData to get the token sess
 
 Update CORS method value like so : 
 
-```
+```py
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
@@ -270,7 +270,7 @@ AWS_COGNITO_USER_POOL_CLIENT_ID: "3p7gve139nvis2k3ug3u4etfst"
 
 - Instantiate CognitoJwtToken to use parameters : 
 
-```
+```py
 cognito_jwt_token = CognitoJwtToken(
   user_pool_id=os.getenv("AWS_COGNITO_USER_POOL_ID"),
   user_pool_client_id=os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
@@ -280,7 +280,7 @@ cognito_jwt_token = CognitoJwtToken(
 
 - Update the route like so :
 
-```
+```py
 @app.route("/api/activities/home", methods=['GET'])
 # @xray_recorder.capture('activities_home')
 def data_home():
@@ -307,7 +307,7 @@ It returning back the claims and verify we log in
 
 However, we need to update the endpoint ```api/homepage/home``` : We're verifying if the user is authentificate :
 
-```
+```py
 if cognito_user_id != None:
         extra_crud = {
           'uuid': '248959df-3079-4947-b847-9e0892d1bab4',

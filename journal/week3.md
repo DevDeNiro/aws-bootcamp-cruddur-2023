@@ -3,7 +3,11 @@
 
 In this sections, we are covering the establishment of SignUp / SignIn / Recovery / Confirmation pages.
 
-- Create a new user pool sg the wizard of AWS. By doing this, only check email options attribute to signIn, otherwise you will get error in the sigIn stage because the username is configure as email allias :
+- Create a new user pool using the wizard of AWS. By doing this, only check email options attribute to signIn, otherwise you will get error in the sigIn stage because the username is configure as email allias :
+
+Creation of the user pool :
+
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/97a9000e0c00fcdca949feccff8d52d933d8927a/_docs/assets/week3/user%20pool%20CREATED.png)
 
 To configure the user group sends emails to users, we will use cognito for now : SES on next session 🕒 
   
@@ -12,7 +16,7 @@ To configure the user group sends emails to users, we will use cognito for now :
 Install sdk on frontend folder :
 ```npm i aws-amplify --save```
 
-To managed auth to Cognito, we are going to use Amplify which is a JavaScript library that provides a set of utility functions and abstractions for simplifying the development of web applications. We use it to simplified the integration of Cognito. 
+To managed auth to Cognito, we are going to use Amplify which is a JavaScript library that provides a set of utility functions and abstractions for simplifying the development of our web applications. We use it to simplified the integration of Cognito. 
  
  To do so, we add to app.JS from frontend folder this line of codes to setup the [library](https://docs.amplify.aws/lib/auth/emailpassword/q/platform/js/) :
 
@@ -46,7 +50,7 @@ After creating a user Group to AWS Cognito, set all the config env to ```gitpod.
 
 - Now, we had to refractor the app to manage the Auth with cognito, and delete cookies validations 
 
-#### In HomeFeedPage.js 
+#### Add HomeFeedPage.js 
 
 ```js
 // check if we are authenicated
@@ -70,7 +74,7 @@ After creating a user Group to AWS Cognito, set all the config env to ```gitpod.
   };
 ```
 
-#### In profilInfo.js :
+#### Add profilInfo.js :
 
 ```js
 import { Auth } from 'aws-amplify';
@@ -85,7 +89,7 @@ const signOut = async () => {
 }
 ```
 
-#### in SigninPage.js
+#### Add SigninPage.js
 
 ```js
 import { Auth } from 'aws-amplify';
@@ -106,7 +110,7 @@ import { Auth } from 'aws-amplify';
 
 Now, we can setup user mamually to Cognito to test signin page :
 
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/97a9000e0c00fcdca949feccff8d52d933d8927a/_docs/assets/week3/add%20attribute%20to%20user%20grp.png)
 
 Unfortunalty, it was not working, so we had to set manually with CLI a new user without verification to bypass JWT token : Cannot read properties of null (reading 'accessToken')
 
@@ -114,11 +118,13 @@ Unfortunalty, it was not working, so we had to set manually with CLI a new user 
 
 ```aws cognito-idp admin-set-user-password --username noodles --password Testing1234! --user-pool-id ca-central-1_VswY8rYDh --permanent```
 
-Then, add attribute to the user account and check if its added :  ![image]()
+Then, add attribute to the user account and check if you can connect :  
 
-We can store now information on Cognito 
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/97a9000e0c00fcdca949feccff8d52d933d8927a/_docs/assets/week3/attributes%20added%20.png)
 
-#### In SignUp Page  
+The user login is now stored on Cognito 
+
+#### Add SignUp Page  
 
 ```js
 import { Auth } from 'aws-amplify';
@@ -152,12 +158,13 @@ import { Auth } from 'aws-amplify';
   }
 ```
 
-
 At this step, We had to recreate the user pool due to email / username error 
 
 After adding the right property, SignIn -> Confirm the account by adding the verification code -> Login !
 
-Check into the Cognito pannel to see if its verify :
+Check into the Cognito pannel to see if the account is verify :
+
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/11e4b4d5610f203b771ddb1e26a55ad347f11753/_docs/assets/week3/user%20group%20verify.png)
 
 #### In Confirmation page
 
@@ -303,7 +310,7 @@ def data_home():
 Now, if we login into our account, we can know values pass thought the container via logs :
 It returning back the claims and verify we log in 
 
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/97a9000e0c00fcdca949feccff8d52d933d8927a/_docs/assets/week3/token%20infos%20recup%20from%20logs.png)
 
 However, we need to update the endpoint ```api/homepage/home``` : We're verifying if the user is authentificate :
 
@@ -376,15 +383,15 @@ def protected_route():
         return 'You must be logged in to access this route.'
 ```
 
-But it doesnt work ;(. 
+Unfortunately, it's doesnt work ;(. 
 
 - Firstly, i got a CORS exception on the client side
 
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/11e4b4d5610f203b771ddb1e26a55ad347f11753/_docs/assets/week3/Cors%20Exception.png)
 
-- Secondly, the user is not pass on the serveur side 
+- furthermore, the user is not pass on the serveur side 
 
-By the way, I took the opportunity to change the error message to have something look more familiar 
+By the way, I took the opportunity to change the error message to have something look more familiar ^^ 
 
 ```js
   { path:"*",
@@ -402,7 +409,7 @@ function PageNotFound() {
 }
 ```
 
-![image]()
+![image](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/11e4b4d5610f203b771ddb1e26a55ad347f11753/_docs/assets/week3/Error%20msg.png)
 
 ## Implement a Container Sidecar Pattern using official Aws-jwt-verify.js library
 

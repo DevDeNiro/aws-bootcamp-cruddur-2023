@@ -16,7 +16,7 @@ import {
   RouterProvider,
   Link
 } from "react-router-dom";
-import jwtVerifier from './jwtVerifier.js';
+// import jwtVerifier from './jwtVerifier.js';
 
 Amplify.configure({
   "AWS_PROJECT_REGION": process.env.REACT_APP_AWS_PROJECT_REGION,
@@ -33,17 +33,17 @@ Amplify.configure({
   }
 });
 
-async function main() {
-  const jwtToken = 'YOUR_JWT_TOKEN_HERE';
-  const {isValid, decoded} = await jwtVerifier.verifyJwt(jwtToken);
-  if (isValid) {
-    console.log(`JWT token is valid. Decoded contents: ${JSON.stringify(decoded)}`);
-  } else {
-    console.log('JWT token is not valid');
-  }
-}
+// async function main() {
+//   const jwtToken = 'YOUR_JWT_TOKEN_HERE';
+//   const {isValid, decoded} = await jwtVerifier.verifyJwt(jwtToken);
+//   if (isValid) {
+//     console.log(`JWT token is valid. Decoded contents: ${JSON.stringify(decoded)}`);
+//   } else {
+//     console.log('JWT token is not valid');
+//   }
+// }
 
-main();
+// main();
 
 const router = createBrowserRouter([
   {

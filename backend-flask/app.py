@@ -35,8 +35,8 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
 # X-RAY -------
-from aws_xray_sdk.core import xray_recorder
-from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+#from aws_xray_sdk.core import xray_recorder
+#from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 from lib.cognito_jwt_token import CognitoJwtToken, JwtMiddleware, extract_access_token, TokenVerifyError
 
@@ -46,7 +46,7 @@ processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 
 trace.set_tracer_provider(provider)
-tracer = trace.get_tracer(__name__)
+# tracer = trace.get_tracer(__name__)
 
 
 # Initialize automatic instrumentation with Flask
@@ -81,9 +81,9 @@ FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 
 # X-RAY -------
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
-XRayMiddleware(app, xray_recorder)
+# xray_url = os.getenv("AWS_XRAY_URL")
+# xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+# XRayMiddleware(app, xray_recorder)
 
 # Configuring Logger to Use CloudWatch
 

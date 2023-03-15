@@ -35,11 +35,11 @@ services:
     volumes:
       - ./frontend-react-js:/frontend-react-js
 
-  sidecar:
-    build: ./jwt-verification-process
-    volumes:
-    - ./jwt-verification-process:/jwt-verification-process
-    - ./frontend-react-js:/frontend-react-js
+  # sidecar:
+  #   build: ./jwt-verification-process
+  #   volumes:
+  #   - ./jwt-verification-process:/jwt-verification-process
+  #   - ./frontend-react-js:/frontend-react-js
 
   xray-daemon:
     image: "amazon/aws-xray-daemon"

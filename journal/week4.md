@@ -146,20 +146,19 @@ Go ahead and install those dependencies : ```pip install -r requirements.txt ```
 
 ```CONNECTION_URL: "postgresql://postgres:password@db:5432/cruddur" ```
 
--> In the code where we need to querie our home_activities first ```from lin.db import pool```, import the lib, and then established connection to return data :
+- In the code where we need to queries our ```home_activities``` first from ```lin.db import pool```, import the lib, and then established connection to return data :
 
 
 ``` 
-      sql = query_wrap_array("""
-      SELECT * FROM activities """)
-      with pool.connection() as conn:
-        with conn.cursor() as cur:
-          cur.execute(sql)
-          # this will return a tuple
-          # the first field being the data
-          json = cur.fetchone()
-      return json[0]
-
+sql = query_wrap_array("""
+SELECT * FROM activities """)
+with pool.connection() as conn:
+with conn.cursor() as cur:
+cur.execute(sql)
+# this will return a tuple
+# the first field being the data
+json = cur.fetchone()
+return json[0]
 ```
 
 Comment all the mock data above and relaunch docker-compose.yml : If we attach logs from docker : The connection should be refused :
@@ -168,9 +167,7 @@ Comment all the mock data above and relaunch docker-compose.yml : If we attach l
 
 -> Remove all the code related to traces to make it work 
 
-[blank : didnt work]
-
--> Match new querie above :
+-> Match new querie above to see the username by the used of JOIN querie  :
 
 ```
     sql = query_wrap_array("""
@@ -189,11 +186,13 @@ Comment all the mock data above and relaunch docker-compose.yml : If we attach l
       LEFT JOIN public.users ON users.uuid = activities.user_uuid
       ORDER BY activities.created_at DESC
       """)
-
 ```
 
+Our first queri is working :
+![image]()
 
-### Connect Gitpod to RDS Instance
+
+### Established Connection from Gitpod to RDS Instance
 
 - Relaunch RDS DB
 - Get PROD env

@@ -429,6 +429,12 @@ CMD ["npm", "start"]
 ```
 sidecar:
     build: ./jwt-verification-process
+    environment:
+      BACKEND_URL: ${BACKEND_URL}
+      AWS_COGNITO_USER_POOL_ID: ${AWS_COGNITO_USER_POOL_ID}
+      AWS_COGNITO_APP_CLIENT_ID: ${AWS_COGNITO_APP_CLIENT_ID}
+    ports:
+      - 4567:4567
     volumes:
     - ./jwt-verification-process:/jwt-verification-process
     - ./frontend-react-js:/frontend-react-js
@@ -453,3 +459,7 @@ async function main() {
 
 main();
 ```
+
+#### Troubleshooting :
+
+This solution is not well implemented, maybe i should use http proxy server to pass throught the HTTP Request, and send the decode value to Flask... WIP 

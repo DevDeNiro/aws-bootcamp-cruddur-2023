@@ -94,7 +94,7 @@ Did not find any relations.
 
 ### Install Postgres Driver in Backend Application
 
-``` \x on``` to expend display 
+```\x on``` to expend display 
 
 - Start writing queries ! 
 
@@ -130,18 +130,17 @@ source "$bin_path/db-schema-load"
 source "$bin_path/db-seed"
 ```
 
--e used to used the exec of the script
+-e is used to used the exec of the script
 
--> add ```
+- next, we add drivers to install postgres client for Binarys and connecion pulling  
+```
 psycopg[binary]
-psycopg[pool]```
+psycopg[pool]
+```
 
-- ```pip install -r requirements.txt ```
+Go ahead and install those dependencies : ```pip install -r requirements.txt ```
 
-
-in requirememt.txt to install psycopg driver to manage concurrency of connection pulling : take advantage of Fargate to manage long time driver
-
--> Create new file [db.py]() under lib folder to manage connection pull : 
+-> Create new file [db.py]() under lib folder to manage connection pull : The idea is to reused connection : Pulling = mamanging multiple connection : With Fargate, EC2, we can run container on long period of time, so therefore we can do connection pulling into our app.
 
 -> Add connection URL into docker-compose.yml file to get CONNECTION string : Not only pass the env variable but also the container related to lie so :
 

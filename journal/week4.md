@@ -36,11 +36,13 @@ To manage connection for the first time :
 
 - Add env variables to GITPOD to use script :
 
+Dev connection URL for GITPOD
 ```
 export CONNECTION_URL='postgresql://postgres:password@localhost:5432/cruddur'
 gp env CONNECTION_URL='postgresql://postgres:password@localhost:5432/cruddur'
 ```
-``` Prod connection for RDS connection
+Prod connection for RDS connection
+```
 PROD_CONNECTION_URL='postgresql://cruddurroot:password@cruddur-db-instance.cmz7ann2jep1.ca-central-1.rds.amazonaws.com:5432/cruddur'
 ```
 
@@ -49,10 +51,14 @@ PROD_CONNECTION_URL='postgresql://cruddurroot:password@cruddur-db-instance.cmz7a
 ```createdb cruddur -h localhost -U postgres```
 ```psql -U postgres -h localhost```
 
-
 - Create a new folder with the following script file : [db-connect]() / [db-create]() / [db-drop]() / [db-schema-load]() 
 
 For Schema Load, develop the use of RealPath 
+
+- If you failed to use use db-schema-load script, try to do :
+
+```psql postgresql://postgres:password@localhost:5432/cruddur cruddur < schema.sql``` To manually create tables
+```psql CONNECTION_URL cruddur < schema.sql```
 
 - We can add the following script to verify if we are we're using DEV or PROD env : 
 
@@ -194,7 +200,62 @@ Our first queri is working :
 
 ### Established Connection from Gitpod to RDS Instance
 
-- Relaunch RDS DB
-- Get PROD env
+Before continue, make sure that you have set the PROD connection url by verifying your local env : ```env | grep PROD```
+
+psql $CONNECTION_URL
+psql $PROD_CONNECTION_URL
 
 
+Is hanging because we need to set the IP adress, to do so the instance has a security group, so we need to add inbound rules to use it by providing our Gitpod IP and whitelist for inbound traffic on port 5432 :
+
+- Determione current IP adress :
+
+```GITPOD_IP=$(curl ifconfig.me)```
+
+![image]()
+
+If you need to know more info from the CLI on your RDS instance :
+
+```aws rds describe-db-instances --region ca-central-1```
+
+Connection to root is now commit :
+
+![image]()
+
+#### Dynamically provide IP adress
+
+Script to update security group :
+
+- Get the Security Group ID from the inbound rule we set : 
+
+```
+export DB_SG_ID="sg-0432fd25e76b791f9"
+gp env DB_SG_ID="sg-0432fd25e76b791f9"
+
+export DB_SG_RULE_ID="sgr-042c145e5f32d7004"
+gp env DB_SG_RULE_ID="sgr-042c145e5f32d7004"
+```
+
+Whenever we need to update our security groups we can do this for access.
+
+```
+aws ec2 modify-security-group-rules \
+    --group-id $DB_SG_ID \
+    --security-group-rules "Description=SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
+ ```
+ 
+ To ensure that the script is launching envery time the GITPOD env is started, we update the GITPOD.yml
+ 
+ - Create new file ```rds-update-sg-rule``` with the script we used before, and add right to make it executable :
+
+```chmod u+x ./bin/rds-update-sg-rule```
+
+To resolve this error : ```An error occurred (InvalidParameterValue) when calling the ModifySecurityGroupRules operation: CIDR block /32 is malformed``` we need to export the ```export GITPOD_IP=$(curl ifconfig.me)```
+
+To run everytime is launching up, it will return the actual worspace : add in ```gitpod.yml``` :
+
+```
+  command: |
+      export GITPOD_IP=$(curl ifconfig.me)
+      source  "$THEIA_WORKSPACE_ROOT/backend-flask/db-update-sg-rule"
+```

@@ -259,3 +259,7 @@ To run everytime is launching up, it will return the actual worspace : add in ``
       export GITPOD_IP=$(curl ifconfig.me)
       source  "$THEIA_WORKSPACE_ROOT/backend-flask/db-update-sg-rule"
 ```
+
+Modify the ```CONNECTION_URL``` line to use the PROD connection URL like so : 
+
+```CONNECTION_URL: "${PROD_CONNECTION_URL}"```

@@ -194,7 +194,7 @@ Comment all the mock data above and relaunch docker-compose.yml : If we attach l
       """)
 ```
 
-Our first queri is working :
+Our first querie is working :
 ![image]()
 
 
@@ -202,9 +202,10 @@ Our first queri is working :
 
 Before continue, make sure that you have set the PROD connection url by verifying your local env : ```env | grep PROD```
 
+```
 psql $CONNECTION_URL
 psql $PROD_CONNECTION_URL
-
+```
 
 Is hanging because we need to set the IP adress, to do so the instance has a security group, so we need to add inbound rules to use it by providing our Gitpod IP and whitelist for inbound traffic on port 5432 :
 
@@ -236,7 +237,7 @@ export DB_SG_RULE_ID="sgr-042c145e5f32d7004"
 gp env DB_SG_RULE_ID="sgr-042c145e5f32d7004"
 ```
 
-Whenever we need to update our security groups we can do this for access.
+Whenever we need to update our security groups, we can do this for access.
 
 ```
 aws ec2 modify-security-group-rules \
@@ -263,3 +264,8 @@ To run everytime is launching up, it will return the actual worspace : add in ``
 Modify the ```CONNECTION_URL``` line to use the PROD connection URL like so : 
 
 ```CONNECTION_URL: "${PROD_CONNECTION_URL}"```
+
+
+### Custom Auth for Cognito
+
+### Create Congito Trigger to insert user into database

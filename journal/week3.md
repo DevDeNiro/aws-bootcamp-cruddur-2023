@@ -414,7 +414,7 @@ function PageNotFound() {
 ## Implement a Container Sidecar Pattern using official Aws-jwt-verify.js library
 
 
-- To try to implememt this step, i first start by create a new folder where my Dockerfile will exist
+- To try to implememt this step, i first start by created a new folder name ```jwt-verification-process``` where my Dockerfile will exist :
 
 ```
 FROM node:16.18
@@ -424,11 +424,13 @@ COPY . .
 CMD ["npm", "start"]
 ```
 
-- I bind this new container with the front one like so : 
+- I bind this new container with the front one like so : The env variables are important because there's allows us to run a service in the same network namespace as another service 
 
 ```
 sidecar:
-    build: ./jwt-verification-process
+    build: 
+      context: ./jwt-verification-process
+      target: development
     environment:
       BACKEND_URL: ${BACKEND_URL}
       AWS_COGNITO_USER_POOL_ID: ${AWS_COGNITO_USER_POOL_ID}
@@ -440,9 +442,9 @@ sidecar:
     - ./frontend-react-js:/frontend-react-js
 ```
 
-- Inside my new folder, i created a new [jwtVerifier.js](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/30deb5392d5b555c44826540c7fa291a8256aa13/jwt-verification-process/jwtVerifier.js) which will have to handle the verification of JWT 
+- Inside my new folder, i created a new [proxy.js](https://github.com/Noodles-boop/aws-bootcamp-cruddur-2023/blob/30deb5392d5b555c44826540c7fa291a8256aa13/jwt-verification-process/jwtVerifier.js) which will have to handle the verification of JWT 
 
-This code exports a function called ```verifyJwt``` that takes a JWT token as an input and verifies whether it is valid by decoding and checking against the user pool and user name in the Amazon Cognito user pool.
+This code exports a proxy who will listen on default port from the backend, which that takes a JWT token as an input and verifies whether it is valid by decoding and checking against the user pool and user name in the Amazon Cognito user pool.
 
 - Finally, i just have to import the function and use the global variable configure by Amplify to check if the JWT is okay or not :
 

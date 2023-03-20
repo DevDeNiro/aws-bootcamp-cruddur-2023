@@ -245,21 +245,20 @@ aws ec2 modify-security-group-rules \
     --security-group-rules "Description=SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
  ```
  
- To ensure that the script is launching envery time the GITPOD env is started, we update the GITPOD.yml
- 
- - Create new file ```rds-update-sg-rule``` with the script we used before, and add right to make it executable :
+ To ensure that the script is launching envery time the GITPOD env is started, we update the ```gitpod.yml```  :
 
-```chmod u+x ./bin/rds-update-sg-rule```
-
-To resolve this error : ```An error occurred (InvalidParameterValue) when calling the ModifySecurityGroupRules operation: CIDR block /32 is malformed``` we need to export the ```export GITPOD_IP=$(curl ifconfig.me)```
-
-To run everytime is launching up, it will return the actual worspace : add in ```gitpod.yml``` :
-
-```
+ ```
   command: |
       export GITPOD_IP=$(curl ifconfig.me)
-      source  "$THEIA_WORKSPACE_ROOT/backend-flask/db-update-sg-rule"
+      source  "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds-update-sg-rule"
 ```
+
+This command will refer to a new script that we are going to create name ```rds-update-sg-rule```
+Then, add right to make it executable : ```chmod u+x ./bin/rds-update-sg-rule```
+
+To resolve this error : ```An error occurred (InvalidParameterValue) when calling the ModifySecurityGroupRules operation: CIDR block /32 is malformed``` we need to export the 
+
+``` GITPOD_IP=$(curl ifconfig.me)```
 
 Modify the ```CONNECTION_URL``` line to use the PROD connection URL like so : 
 
@@ -272,7 +271,17 @@ Create a custom Auth for Cognito :
 
 - Create new lambda function with ptyhon3.0 and x86 architecture
 
-- Create new folder name lambdas, with cruddur-post-confirmation.py
-  - Set env variables from DEV env on lambda function 
-  - Create new layer
+- Create new folder name lambdas, with [cruddur-post-confirmation.py]() inside it
+  Set env variables from DEV env on lambda function 
+  Create new layer with ARN privided in the doc : ```arn:aws:lambda:ca-central-1:898466741470:layer:psycopg2-py38:1```
 
+  A good security practice would be to genete one by yourself by using the [psycopg2 Python Library for AWS Lambda](https://github.com/AbhimanyuHK/aws-psycopg2)
+
+- Go on Cognito Pannel to add the new Lambda trigger after confirmation signUp
+
+The image bellow show that lambda function is storing new user into RDS instance :
+
+![image]()
+
+
+### Create new activities with a database insert

@@ -266,6 +266,13 @@ Modify the ```CONNECTION_URL``` line to use the PROD connection URL like so :
 ```CONNECTION_URL: "${PROD_CONNECTION_URL}"```
 
 
-### Custom Auth for Cognito
-
 ### Create Congito Trigger to insert user into database
+
+Create a custom Auth for Cognito :
+
+- Create new lambda function with ptyhon3.0 and x86 architecture
+
+- Create new folder name lambdas, with cruddur-post-confirmation.py
+  - Set env variables from DEV env on lambda function 
+  - Create new layer
+

@@ -285,3 +285,28 @@ The image bellow show that lambda function is storing new user into RDS instance
 
 
 ### Create new activities with a database insert
+
+#### INSERT DATA WITH VALUES 
+
+Andrew done a BIG refractor on this step of the implementation, so i will directly link to the file modified from his repo :
+
+- Refractor of [db.py](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/f3f5a927667fa841eaecdeb40913ae44d0ff9fa5/backend-flask/lib/db.py) 
+
+- Refractor of [home_activities.py](https://github.com/omenking/aws-bootcamp-cruddur-2023/blob/f3f5a927667fa841eaecdeb40913ae44d0ff9fa5/backend-flask/services/home_activities.py)
+
+- 
+
+-  In ```create_activity.py```, we create a new INSERT SQL QUeries to seed our data from the application.
+
+```py
+   def create_activity(handle, message, expires_at):
+      sql = db.template('activities','create')
+      uuid = db.query_commit(sql,{
+        'handle': handle,
+        'message': message,
+        'expires_at': expires_at
+      })
+      return uuid
+
+```
+

@@ -3,7 +3,7 @@
 
 # Substitution string
 #Select -> replace
-## Doesnt work the same onm all limux system
+## Doesnt work the same onm all linux system
 
 
 echo 'db-create'

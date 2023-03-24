@@ -1,7 +1,6 @@
 #! /usr/bin/bash
 -e # stop if it fails at any point
 
-#echo "==== db-setup"
 CYAN='\033[1;36m'
 NO_COLOR='\033[0m'
 LABEL="db-setup"

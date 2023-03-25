@@ -325,4 +325,31 @@ Andrew done a BIG refractor on this step of the implementation, so i will direct
 
 ##### TroubleShooting
 
-- 
+-- AttributeError: 'NotNullViolation' object has no attribute 'pgerror'
+
+Ah really have treate about this errer : It is because the `user_handle` attribute is hard coded im the backend flask, so if we want to dynamically manage this problem we need to do some changes :
+
+- In app.py, under the /api/activities route, assign the user_handle variable as follows:
+
+```user_handle = request.json["user_handle"]```
+
+Update the ActivityForm component in pages/HomeFeedPage.js to pass the user_handle prop as follows:
+
+```js
+<ActivityForm
+  user_handle={user}
+  popped={popped}
+  setPopped={setPopped}
+  setActivities={setActivities}
+/>
+```
+
+- In the components/ActivityForm.js component, update the fetch request body to include the user_handle:
+
+```js
+body: JSON.stringify({
+  user_handle: props.user_handle.handle,
+  message: message,
+  ttl: ttl
+}),
+```

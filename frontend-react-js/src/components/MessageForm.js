@@ -10,7 +10,7 @@ export default function ActivityForm(props) {
 
   const classes = []
   classes.push('count')
-  if (1024-count < 0){
+  if (1024 - count < 0) {
     classes.push('err')
   }
 
@@ -37,12 +37,12 @@ export default function ActivityForm(props) {
       });
       let data = await res.json();
       if (res.status === 200) {
-        console.log('data:',data)
+        console.log('data:', data)
         if (data.message_group_uuid) {
           console.log('redirect to message group')
           window.location.href = `/messages/${data.message_group_uuid}`
         } else {
-          props.setMessages(current => [...current,data]);
+          props.setMessages(current => [...current, data]);
         }
       } else {
         console.log(res)
@@ -58,7 +58,7 @@ export default function ActivityForm(props) {
   }
 
   return (
-    <form 
+    <form
       className='message_form'
       onSubmit={onsubmit}
     >
@@ -66,10 +66,10 @@ export default function ActivityForm(props) {
         type="text"
         placeholder="send a direct message..."
         value={message}
-        onChange={textarea_onchange} 
+        onChange={textarea_onchange}
       />
       <div className='submit'>
-        <div className={classes.join(' ')}>{1024-count}</div>
+        <div className={classes.join(' ')}>{1024 - count}</div>
         <button type='submit'>Message</button>
       </div>
     </form>

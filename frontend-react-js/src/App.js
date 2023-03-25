@@ -1,22 +1,22 @@
 import './App.css';
-import { Amplify } from 'aws-amplify';
-import NotificationsFeedPage from './pages/NotificationsFeedPage';
+
 import HomeFeedPage from './pages/HomeFeedPage';
+import NotificationsFeedPage from './pages/NotificationsFeedPage';
 import UserFeedPage from './pages/UserFeedPage';
 import SignupPage from './pages/SignupPage';
 import SigninPage from './pages/SigninPage';
 import RecoverPage from './pages/RecoverPage';
 import MessageGroupsPage from './pages/MessageGroupsPage';
 import MessageGroupPage from './pages/MessageGroupPage';
+import MessageGroupNewPage from './pages/MessageGroupNewPage';
 import ConfirmationPage from './pages/ConfirmationPage';
 import React from 'react';
-import process from 'process';
 import {
   createBrowserRouter,
-  RouterProvider,
-  Link
+  RouterProvider
 } from "react-router-dom";
-// import jwtVerifier from './jwtVerifier.js';
+
+import { Amplify } from 'aws-amplify';
 
 Amplify.configure({
   "AWS_PROJECT_REGION": process.env.REACT_APP_AWS_PROJECT_REGION,
@@ -27,11 +27,12 @@ Amplify.configure({
   Auth: {
     // We are not using an Identity Pool
     // identityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID, // REQUIRED - Amazon Cognito Identity Pool ID
-    region: process.env.REACT_AWS_PROJECT_REGION,           // REQUIRED - Amazon Cognito Region
+    region: process.env.REACT_APP_AWS_PROJECT_REGION,           // REQUIRED - Amazon Cognito Region
     userPoolId: process.env.REACT_APP_AWS_USER_POOLS_ID,         // OPTIONAL - Amazon Cognito User Pool ID
     userPoolWebClientId: process.env.REACT_APP_CLIENT_ID,   // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
   }
 });
+
 
 // async function main() {
 //   const jwtToken = 'YOUR_JWT_TOKEN_HERE';
@@ -45,25 +46,30 @@ Amplify.configure({
 
 // main();
 
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeFeedPage />
   },
   {
-    path: "/@:handle",
-    element: <UserFeedPage />
-  },
-  {
     path: "/notifications",
     element: <NotificationsFeedPage />
+  },
+  {
+    path: "/@:handle",
+    element: <UserFeedPage />
   },
   {
     path: "/messages",
     element: <MessageGroupsPage />
   },
   {
-    path: "/messages/@:handle",
+    path: "/messages/new/:handle",
+    element: <MessageGroupNewPage />
+  },
+  {
+    path: "/messages/:message_group_uuid",
     element: <MessageGroupPage />
   },
   {
@@ -81,21 +87,8 @@ const router = createBrowserRouter([
   {
     path: "/forgot",
     element: <RecoverPage />
-  }, 
-  { path:"*",
-     element: <PageNotFound />
   }
 ]);
-
-function PageNotFound() {
-  return (
-    <div className='body-error'>
-      <h1>404 Not Found</h1>
-      <p className='Link'>The page you are looking for does not exist.</p>
-        <Link to = '/' >Go back to home page</Link>
-    </div>
-  );
-}
 
 function App() {
   return (

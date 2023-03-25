@@ -4,7 +4,7 @@ INSERT INTO
 VALUES
   (
     'Andrew Brown',
-    'andrewb@exampro.co',
+    'andrew@exampro.co',
     'andrewbrown',
     'MOCK'
   ),
@@ -12,6 +12,12 @@ VALUES
     'Andrew Bayko',
     'bayko@exampro.co',
     'bayko',
+    'MOCK'
+  );
+(
+    'Londo Mollari',
+    'lmollari@centari.com',
+    'londo',
     'MOCK'
   );
 INSERT INTO

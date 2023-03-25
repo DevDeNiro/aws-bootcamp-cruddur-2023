@@ -53,12 +53,7 @@ PROD_CONNECTION_URL='postgresql://cruddurroot:password@cruddur-db-instance.cmz7a
 
 - Create a new folder with the following script file : [db-connect]() / [db-create]() / [db-drop]() / [db-schema-load]() 
 
-For Schema Load, develop the use of RealPath 
-
-- If you failed to use use db-schema-load script, try to do :
-
-```psql postgresql://postgres:password@localhost:5432/cruddur cruddur < schema.sql``` To manually create tables
-```psql CONNECTION_URL cruddur < schema.sql```
+The real path will print the resolved absolute file name 
 
 - We can add the following script to verify if we are we're using DEV or PROD env : 
 
@@ -93,10 +88,12 @@ DROP TABLE IF EXISTS public.activities;
 
 - Relaunch db-schema-load -> db-seed script to add data !
 
-```
-cruddur=# \dt
-Did not find any relations.
-```
+- If you failed to use use db-schema-load script, try to do :
+
+```psql postgresql://postgres:password@localhost:5432/cruddur cruddur < schema.sql``` to manually create tables
+
+```psql CONNECTION_URL cruddur < schema.sql```
+
 
 ### Install Postgres Driver in Backend Application
 
@@ -117,7 +114,6 @@ psql $NO_DB_CONNECTION_URL -c "select pid as process_id, \
        application_name as app,\
        state \
 from pg_stat_activity;"
-
 ```
 
 Change permission to make to file executable : ```chmod u+x ./bin/db-sessions```

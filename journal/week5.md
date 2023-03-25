@@ -2,13 +2,13 @@
 
 Regarding the design pattern create during the Data Modelling Live Stream, we will be implementing 4 pattern :
 
-- A
-- B 
-- C
-- D :  Implement a mesage group with the mesage
+- Pattern A : Listing Messages in Message Group into Application
+- Pattern B : Listing Messages Group into Application
+- Pattern C : Creating a Message for an existing Message Group into Application
+- Pattern D : Creating a Message for a new Message Group into Application
+- Pattern E : Updating a Message Group using DynamoDB Streams
 
 -- The order of implementation doesnt matter --
-
 
 ## DynamoDb Utility Scrips
 Don't forget to uncomment the DynamoDB service we comment before on week 1 :3 
@@ -189,3 +189,73 @@ The get conversation will return 2 statements : Firstly the dict of data
 Then, the actual values 
 ![image]()
 
+## Implement Conversations with DynamoDB
+
+In this section, i'am going to cover the implementaton of the utility script with the backend and frontend of our application 
+
+### Implement Update Cognito ID Script for Postgres Database
+
+- Create [ddb.py]() inside lib folder to have an object like for RDS, except that this one is using initialisation by using constructor  
+
+- Populate our actual user_id in `seed.sql` file to dynamycally retrieve the value of the user : Todo so we are going to create a new `cognito` folder in `bin` directory with a [list-users]() script.
+
+Using the [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference/iam/list-users.html), we are going to list user of the user pool
+
+`chmod u+x ./bin/cognito/*` 
+
+![image]()
+
+- Create a new [update_cognito_user_ids]() script into `db` folder to update the `user_uiids` into our database
+
+add this new script into the `setup` one : ```source "$bin_path/update_cognito_user_ids"```
+
+This will dynamically populate our seed data into `handle` and `dub` field 
+
+![image]()
+
+### Implement (Pattern A) Listing Messages in Message Group into Application
+
+- Update [mesage-group.py]() to implement dynamiccaly the value we pass in
+
+- Create new sql file name `uuid_from_cognito_user_id.sql` : 
+
+```sql
+SELECT
+  users.uuid
+FROM
+  public.users
+WHERE
+  users.cognito_user_id = %(cognito_user_id) s
+LIMIT
+  1
+```
+
+
+```No token provided``` : We are not passing our access token into our react-front end app 
+
+- We need to pass the actual access token into `MessageGroupPage.js` : 
+
+```js
+headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`
+        },
+        method: "GET"
+```
+
+- And in `MessageForm.js`
+
+```js
+  headers: {
+          'Authorization': `Bearer ${localStorage.getItem("access_token")}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+```
+
+### Implement (Pattern B) Listing Messages Group into Application
+
+### Implement (Pattern C) Creating a Message for an existing Message Group into Application
+
+### Implement (Pattern D) Creating a Message for a new Message Group into Application
+
+### Implement (Pattern E) Updating a Message Group using DynamoDB Streams

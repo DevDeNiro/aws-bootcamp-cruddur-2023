@@ -310,3 +310,19 @@ Andrew done a BIG refractor on this step of the implementation, so i will direct
 
 ```
 
+#### Launch script in prod
+
+
+-> ./bin/db-schema-load prod
+
+-> ./bin/db-seed prod
+
+-> ./bin/db-connect prod
+
+-> SELECT * FROM activities;
+
+-> ./bin/db-setup ?
+
+##### TroubleShooting
+
+- 

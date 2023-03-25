@@ -1,18 +1,17 @@
 import time
 import requests
-from flask import request
 from jose import jwk, jwt
 from jose.exceptions import JOSEError
 from jose.utils import base64url_decode
 
-import json
-from urllib.request import urlopen
 
 class FlaskAWSCognitoError(Exception):
-  pass
+    pass
+
 
 class TokenVerifyError(Exception):
-  pass
+    pass
+
 
 def extract_access_token(request_headers):
     access_token = None
@@ -21,26 +20,23 @@ def extract_access_token(request_headers):
         _, access_token = auth_header.split()
     return access_token
 
+#class JwtMiddleware:
+    # def __init__(self,  user_pool_id, user_pool_client_id, region):
+    #     self.jwt_token = CognitoJwtToken(user_pool_id, user_pool_client_id, region)
 
-
-class JwtMiddleware:
-    def __init__(self,  user_pool_id, user_pool_client_id, region):
-        self.jwt_token = CognitoJwtToken(user_pool_id, user_pool_client_id, region)
-
-    def __call__(self, environ, start_response):
-        path = request.path
-        if path.startswith('/api'):
-            auth_header = request.headers.get('Authorization', None)
-            if auth_header:
-                token = auth_header.split(' ')[1]
-                try:
-                    claims = self.jwt_token.verify(token)
-                    request.environ['jwt_claims'] = claims
-                except Exception as e:
-                    response = Response(str(e), status=401)
-                    return response(environ, start_response)
-        return self.app(environ, start_response)
-
+    # def __call__(self, environ, start_response):
+    #     path = request.path
+    #     if path.startswith('/api'):
+    #         auth_header = request.headers.get('Authorization', None)
+    #         if auth_header:
+    #             token = auth_header.split(' ')[1]
+    #             try:
+    #                 claims = self.jwt_token.verify(token)
+    #                 request.environ['jwt_claims'] = claims
+    #             except Exception as e:
+    #                 response = Response(str(e), status=401)
+    #                 return response(environ, start_response)
+    #     return self.app(environ, start_response)
 
 class CognitoJwtToken:
     def __init__(self, user_pool_id, user_pool_client_id, region, request_client=None):
@@ -55,7 +51,6 @@ class CognitoJwtToken:
         else:
             self.request_client = request_client
         self._load_jwk_keys()
-
 
     def _load_jwk_keys(self):
         keys_url = f"https://cognito-idp.{self.region}.amazonaws.com/{self.user_pool_id}/.well-known/jwks.json"
@@ -76,7 +71,7 @@ class CognitoJwtToken:
     def _find_pkey(self, headers):
         kid = headers["kid"]
         # search for the kid in the downloaded public keys
-        key_index = -1 
+        key_index = -1
         for i in range(len(self.jwk_keys)):
             if kid == self.jwk_keys[i]["kid"]:
                 key_index = i
@@ -114,7 +109,8 @@ class CognitoJwtToken:
         if not current_time:
             current_time = time.time()
         if current_time > claims["exp"]:
-            raise TokenVerifyError("Token is expired")  # probably another exception
+            # probably another exception
+            raise TokenVerifyError("Token is expired")
 
     def _check_audience(self, claims):
         # and the Audience  (use claims['client_id'] if verifying an access token)
@@ -135,5 +131,5 @@ class CognitoJwtToken:
         self._check_expiration(claims, current_time)
         self._check_audience(claims)
 
-        self.claims = claims 
+        self.claims = claims
         return claims
